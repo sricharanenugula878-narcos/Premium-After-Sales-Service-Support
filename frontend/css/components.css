@@ -676,3 +676,88 @@ select.form-control {
     border-radius: 50%;
     animation: skeleton-pulse 1.5s infinite ease-in-out;
 }
+
+/* Sidebar footer profile card styles */
+.sidebar-footer {
+    padding: 1.25rem !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.2) !important;
+    display: flex;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    gap: 1rem !important;
+}
+
+.profile-card {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    width: 100%;
+}
+
+.profile-user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.profile-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+.profile-actions .action-btn {
+    flex: 1;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(255, 255, 255, 0.05);
+    color: rgba(236, 240, 241, 0.85);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all var(--transition-fast);
+}
+
+.profile-actions .action-btn:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.profile-actions .btn-logout-red {
+    flex: 2;
+    background-color: var(--status-rejected);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 0.5rem 1rem;
+    font-family: var(--font-heading);
+    font-weight: 600;
+    font-size: 0.825rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.35rem;
+    transition: all var(--transition-fast);
+    text-decoration: none;
+}
+
+.profile-actions .btn-logout-red:hover {
+    background-color: #c0392b;
+    transform: scale(1.03);
+}
+
+.profile-actions .btn-logout-red svg {
+    width: 14px;
+    height: 14px;
+    stroke: currentColor;
+    stroke-width: 2.5;
+    fill: none;
+}
+
