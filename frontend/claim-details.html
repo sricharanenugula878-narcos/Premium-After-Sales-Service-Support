@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVS Furniture - Ticket Details</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .details-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 992px) {
+            .details-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+        .info-group {
+            margin-bottom: 0.5rem;
+        }
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.25rem;
+            font-weight: 700;
+        }
+        .info-value {
+            font-weight: 600;
+            color: var(--text-primary);
+            font-size: 0.95rem;
+        }
+        
+        /* Clean vertical timeline for logs */
+        .timeline {
+            position: relative;
+            padding-left: 1.5rem;
+            border-left: 2px solid var(--border-color);
+            margin-left: 0.5rem;
+            margin-top: 1rem;
+        }
+        .timeline-item {
+            position: relative;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+        }
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.05rem;
+            top: 0.25rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            border: 2px solid white;
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Collapsible Premium Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                </svg>
+                <span>SVS Admin Hub</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="customers.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <span>Customers</span>
+                </a>
+                <a href="#" class="nav-item" style="opacity: 0.65; cursor: default;" onclick="return false;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    <span>Products</span>
+                </a>
+                <a href="claims.html" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    <span>Tickets</span>
+                </a>
+                <a href="claims.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>Warranty Claims</span>
+                </a>
+                <a href="technicians.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    <span>Technicians</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    <span>Reports</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="avatar" id="avatarLetter">A</div>
+                <div class="user-details">
+                    <span class="username" id="currentUserName">Admin</span>
+                    <span class="role">Administrator</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="page-title">
+                    <h2 id="pageTitle">Ticket Administration</h2>
+                </div>
+                <div>
+                    <button id="logoutBtn" class="btn btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="page-content animate-fade-in">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <a href="claims.html" class="btn btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                        <span>Back to Tickets</span>
+                    </a>
+                    <div style="display: flex; gap: 0.75rem;">
+                        <button class="btn btn-secondary" onclick="window.print()">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"></polyline><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"></path><rect x="6" y="14" width="12" height="8"></rect></svg>
+                            <span>Print</span>
+                        </button>
+                        <button class="btn btn-accent" onclick="UI.openModal('statusModal')">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                            <span>Update Status</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="details-grid">
+                    <!-- Left Side Details -->
+                    <div style="display: flex; flex-direction: column; gap: 2rem;">
+                        <!-- Main Info Card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h3 id="claimNumber">Ticket: LOADING...</h3>
+                                <div id="claimStatus"></div>
+                            </div>
+                            <div class="card-body">
+                                <h4 style="margin-bottom: 1.25rem; font-size: 1rem; color: var(--primary-color);">Product & Warranty Details</h4>
+                                <div class="info-grid">
+                                    <div class="info-group">
+                                        <div class="info-label">Product / Furniture Name</div>
+                                        <div class="info-value" id="infoProduct">-</div>
+                                    </div>
+                                    <div class="info-group">
+                                        <div class="info-label">Furniture Type</div>
+                                        <div class="info-value" id="infoType">-</div>
+                                    </div>
+                                    <div class="info-group">
+                                        <div class="info-label">Complaint Category</div>
+                                        <div class="info-value" id="infoComplaint">-</div>
+                                    </div>
+                                    <div class="info-group">
+                                        <div class="info-label">Priority Level</div>
+                                        <div class="info-value" id="infoPriority">-</div>
+                                    </div>
+                                    <div class="info-group">
+                                        <div class="info-label">Invoice Purchase Date</div>
+                                        <div class="info-value" id="infoPurchase">-</div>
+                                    </div>
+                                    <div class="info-group">
+                                        <div class="info-label">Warranty Expiry Date</div>
+                                        <div class="info-value" id="infoWarranty">-</div>
+                                    </div>
+                                </div>
+                                
+                                <hr style="margin: 2rem 0; border: none; border-top: 1px solid var(--border-color);">
+                                
+                                <h4 style="margin-bottom: 0.75rem; font-size: 1rem; color: var(--primary-color);">Issue Description</h4>
+                                <p id="infoDescription" style="white-space: pre-wrap; font-size: 0.95rem; color: #34495E; line-height: 1.7; background-color: #FAF9F8; padding: 1.25rem; border-radius: var(--radius-sm); border: 1px solid var(--border-color);">-</p>
+                            </div>
+                        </div>
+
+                        <!-- Customer Info Card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Customer Information</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="info-grid">
+                                    <div class="info-group">
+                                        <div class="info-label">Client Name</div>
+                                        <div class="info-value" id="infoCustomerName">-</div>
+                                    </div>
+                                    <div class="info-group">
+                                        <div class="info-label">Contact Phone</div>
+                                        <div class="info-value" id="infoCustomerPhone">-</div>
+                                    </div>
+                                    <div class="info-group" style="grid-column: span 2;">
+                                        <div class="info-label">Shipping / Street Address</div>
+                                        <div class="info-value" id="infoCustomerAddress">-</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Side Details -->
+                    <div style="display: flex; flex-direction: column; gap: 2rem;">
+                        <!-- Tech Info Card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Assigned Workshop Tech</h2>
+                            </div>
+                            <div class="card-body" style="text-align: center; padding: 2rem;">
+                                <div style="width: 54px; height: 54px; border-radius: 50%; background-color: rgba(139, 92, 246, 0.08); color: var(--status-assigned); display: flex; align-items: center; justify-content: center; margin: 0 auto 1rem;">
+                                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                                </div>
+                                <div class="info-value" id="infoTechName" style="font-size: 1.15rem; font-family: var(--font-heading); font-weight: 700; color: var(--text-primary);">Unassigned</div>
+                            </div>
+                        </div>
+
+                        <!-- Audit Logs Card -->
+                        <div class="card">
+                            <div class="card-header">
+                                <h2>Activity History</h2>
+                            </div>
+                            <div class="card-body">
+                                <div class="timeline" id="auditTimeline">
+                                    <!-- Populated dynamically -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Status Update Modal -->
+    <div class="modal-backdrop" id="statusModal">
+        <div class="modal">
+            <div class="card-header">
+                <h2>Update Ticket Status</h2>
+                <button class="btn btn-sm btn-secondary" style="border-radius: 50%; width: 28px; height: 28px; padding: 0;" data-close-modal>&times;</button>
+            </div>
+            <div class="card-body">
+                <form id="statusForm">
+                    <div class="form-group">
+                        <label class="form-label" for="newStatus">New Status Value</label>
+                        <select id="newStatus" class="form-control" required>
+                            <option value="New">New</option>
+                            <option value="Assigned">Assigned</option>
+                            <option value="In Progress">In Progress</option>
+                            <option value="Completed">Completed</option>
+                            <option value="Rejected">Rejected</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="statusNotes">Status Update Reason / Notes *</label>
+                        <textarea id="statusNotes" class="form-control" rows="3" placeholder="Notes detailing the status shift, workshop updates, or client notices..." required></textarea>
+                    </div>
+                    <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2rem;">
+                        <button type="button" class="btn btn-secondary" data-close-modal>Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/pages/claim-details.js"></script>
+    <script>
+        // Set avatar letter
+        document.addEventListener('DOMContentLoaded', () => {
+            const userStr = localStorage.getItem('user');
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                if (user.username && user.username.length > 0) {
+                    document.getElementById('avatarLetter').textContent = user.username.charAt(0).toUpperCase();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

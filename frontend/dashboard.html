@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVS Furniture - Admin Dashboard</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard-layout {
+            display: grid;
+            grid-template-columns: 2fr 1.1fr;
+            gap: 2rem;
+        }
+        @media (max-width: 1200px) {
+            .dashboard-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Collapsible Premium Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                </svg>
+                <span>SVS Admin Hub</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="customers.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <span>Customers</span>
+                </a>
+                <a href="#" class="nav-item" style="opacity: 0.65; cursor: default;" onclick="return false;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    <span>Products</span>
+                </a>
+                <a href="claims.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                    <span>Tickets</span>
+                </a>
+                <a href="claims.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>Warranty Claims</span>
+                </a>
+                <a href="technicians.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    <span>Technicians</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="nav-item" style="opacity: 0.65; cursor: default;" onclick="return false;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="avatar" id="avatarLetter">A</div>
+                <div class="user-details">
+                    <span class="username" id="currentUserName">Admin</span>
+                    <span class="role" id="currentUserRole">Administrator</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="page-title">
+                    <h2>Overview Dashboard</h2>
+                </div>
+                <div>
+                    <button id="logoutBtn" class="btn btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="page-content animate-fade-in">
+                <!-- Hero Banner Card -->
+                <div class="hero-banner">
+                    <div>
+                        <h1>Welcome back, <span id="heroWelcomeName">Administrator</span></h1>
+                        <p>Track furniture service requests, review warranty claims, and manage workshop repair technician assignments from a single screen.</p>
+                    </div>
+                </div>
+
+                <!-- Metrics Grid -->
+                <div class="metric-grid">
+                    <div class="metric-card" style="border-left-color: var(--primary-color);">
+                        <div class="metric-card-header">
+                            <span class="metric-title">Total Tickets</span>
+                            <div class="metric-icon-box">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line></svg>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="metric-total">-</div>
+                        <div class="metric-trend up">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+                            <span>100% Volume</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" style="border-left-color: var(--status-new);">
+                        <div class="metric-card-header">
+                            <span class="metric-title">New Requests</span>
+                            <div class="metric-icon-box" style="background-color: rgba(59, 130, 246, 0.08); color: var(--status-new);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="16"></line><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="metric-pending">-</div>
+                        <div class="metric-trend" style="color: var(--text-secondary)">
+                            <span>Requires Action</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" style="border-left-color: var(--status-inprogress);">
+                        <div class="metric-card-header">
+                            <span class="metric-title">Active Tickets</span>
+                            <div class="metric-icon-box" style="background-color: rgba(42, 157, 143, 0.08); color: var(--status-inprogress);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 14.66V20a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h5.34"></path><polygon points="18 2 22 6 12 16 8 16 8 12 18 2"></polygon></svg>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="metric-inprogress">-</div>
+                        <div class="metric-trend up">
+                            <span>In Progress / Assigned</span>
+                        </div>
+                    </div>
+                    <div class="metric-card" style="border-left-color: var(--status-completed);">
+                        <div class="metric-card-header">
+                            <span class="metric-title">Resolved Tickets</span>
+                            <div class="metric-icon-box" style="background-color: rgba(46, 204, 113, 0.08); color: var(--status-completed);">
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                            </div>
+                        </div>
+                        <div class="metric-value" id="metric-completed">-</div>
+                        <div class="metric-trend up">
+                            <span>Customer Verified</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dashboard Details Section -->
+                <div class="dashboard-layout">
+                    <!-- Recent Claims Table -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Recent Support Tickets</h2>
+                            <a href="claims.html" class="btn btn-sm btn-secondary">
+                                <span>View All</span>
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                            </a>
+                        </div>
+                        <div class="card-body" style="padding: 0;">
+                            <div class="table-container">
+                                <table class="table" id="recentClaimsTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Ticket ID</th>
+                                            <th>Customer</th>
+                                            <th>Issue Type</th>
+                                            <th>Status</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <!-- Dynamic rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Status Distribution Chart -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h2>Status Distribution</h2>
+                        </div>
+                        <div class="card-body" style="display: flex; align-items: center; justify-content: center; min-height: 250px;">
+                            <div style="width: 100%; max-width: 200px;">
+                                <canvas id="statusChart" width="200" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/pages/dashboard.js"></script>
+    <script>
+        // Custom Avatar & Welcome logic
+        document.addEventListener('DOMContentLoaded', () => {
+            const userStr = localStorage.getItem('user');
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                document.getElementById('heroWelcomeName').textContent = user.username;
+                if (user.username && user.username.length > 0) {
+                    document.getElementById('avatarLetter').textContent = user.username.charAt(0).toUpperCase();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

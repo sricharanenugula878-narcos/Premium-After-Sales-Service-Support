@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SVS Furniture - Manage Ticket Form</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Collapsible Premium Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3zM7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"></path>
+                </svg>
+                <span>SVS Admin Hub</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+                    <span>Dashboard</span>
+                </a>
+                <a href="customers.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    <span>Customers</span>
+                </a>
+                <a href="#" class="nav-item" style="opacity: 0.65; cursor: default;" onclick="return false;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    <span>Products</span>
+                </a>
+                <a href="claims.html" class="nav-item active">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+                    <span>Tickets</span>
+                </a>
+                <a href="claims.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+                    <span>Warranty Claims</span>
+                </a>
+                <a href="technicians.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+                    <span>Technicians</span>
+                </a>
+                <a href="reports.html" class="nav-item">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                    <span>Reports</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="avatar" id="avatarLetter">A</div>
+                <div class="user-details">
+                    <span class="username" id="currentUserName">Admin</span>
+                    <span class="role">Administrator</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="topbar">
+                <div class="page-title">
+                    <h2 id="pageTitle">Create Claim</h2>
+                </div>
+                <div>
+                    <button id="logoutBtn" class="btn btn-secondary">
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+                        <span>Logout</span>
+                    </button>
+                </div>
+            </header>
+
+            <div class="page-content animate-fade-in">
+                <div class="card" style="max-width: 720px; margin: 0 auto;">
+                    <div class="card-header">
+                        <h2>Ticket Information</h2>
+                        <a href="claims.html" class="btn btn-sm btn-secondary">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            <span>Back to list</span>
+                        </a>
+                    </div>
+                    <div class="card-body">
+                        <form id="claimForm">
+                            <input type="hidden" id="claimId">
+                            
+                            <div class="form-group">
+                                <label class="form-label" for="customerId">Select Customer Account *</label>
+                                <select id="customerId" class="form-control" required>
+                                    <option value="">Choose Customer...</option>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                                <div class="form-group">
+                                    <label class="form-label" for="productName">Product Name *</label>
+                                    <input type="text" id="productName" class="form-control" placeholder="e.g. Oak Dining Set" required>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="furnitureType">Furniture Category *</label>
+                                    <input type="text" id="furnitureType" class="form-control" placeholder="e.g. Dining Table / Chair" required>
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                                <div class="form-group">
+                                    <label class="form-label" for="purchaseDate">Purchase Date</label>
+                                    <input type="date" id="purchaseDate" class="form-control">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="warrantyExpiry">Warranty Expiration Date</label>
+                                    <input type="date" id="warrantyExpiry" class="form-control">
+                                </div>
+                            </div>
+
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                                <div class="form-group">
+                                    <label class="form-label" for="complaintType">Ticket / Issue Category *</label>
+                                    <select id="complaintType" class="form-control" required>
+                                        <option value="Repair">Repair</option>
+                                        <option value="Polishing">Polishing</option>
+                                        <option value="Replacement">Replacement</option>
+                                        <option value="Warranty Claim">Warranty Claim</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label" for="priority">Priority</label>
+                                    <select id="priority" class="form-control">
+                                        <option value="Low">Low</option>
+                                        <option value="Medium" selected>Medium</option>
+                                        <option value="High">High</option>
+                                        <option value="Urgent">Urgent</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="description">Detailed Description *</label>
+                                <textarea id="description" class="form-control" rows="4" placeholder="Detail any customer complaints, loose fittings, missing items, polishing problems..." required></textarea>
+                            </div>
+
+                            <div class="form-group" id="technicianGroup" style="border-top: 1px solid var(--border-color); padding-top: 1.5rem; margin-top: 2rem;">
+                                <label class="form-label" for="technicianId">Assign Workshop Technician</label>
+                                <select id="technicianId" class="form-control">
+                                    <option value="">-- Unassigned --</option>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+
+                            <div style="display: flex; justify-content: flex-end; gap: 1rem; margin-top: 2.5rem;">
+                                <a href="claims.html" class="btn btn-secondary">Cancel</a>
+                                <button type="submit" class="btn btn-primary">Save Ticket</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/pages/claim-form.js"></script>
+    <script>
+        // Profile Letter
+        document.addEventListener('DOMContentLoaded', () => {
+            const userStr = localStorage.getItem('user');
+            if (userStr) {
+                const user = JSON.parse(userStr);
+                if (user.username && user.username.length > 0) {
+                    document.getElementById('avatarLetter').textContent = user.username.charAt(0).toUpperCase();
+                }
+            }
+        });
+    </script>
+</body>
+</html>

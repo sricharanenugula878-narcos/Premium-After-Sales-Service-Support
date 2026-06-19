@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard - Service System</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/components.css">
+    <style>
+        .timeline {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            padding: 0 1rem;
+            position: relative;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 15px;
+            left: 2rem;
+            right: 2rem;
+            height: 4px;
+            background-color: var(--border-color);
+            z-index: 1;
+        }
+
+        .timeline-step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+            position: relative;
+        }
+
+        .step-circle {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background-color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            border: 3px solid var(--card-bg);
+            transition: all var(--transition-normal);
+        }
+
+        .timeline-step.active .step-circle {
+            background-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
+
+        .timeline-step.completed .step-circle {
+            background-color: var(--status-completed);
+        }
+
+        .step-label {
+            margin-top: 0.5rem;
+            font-size: 0.75rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+        }
+
+        .timeline-step.active .step-label {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .notification-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            transition: background var(--transition-fast);
+        }
+
+        .notification-item:hover {
+            background-color: var(--background-light);
+        }
+
+        .notification-item.unread {
+            background-color: rgba(37, 99, 235, 0.05);
+            border-left: 3px solid var(--primary-color);
+        }
+
+        .badge-expired {
+            background-color: #fecaca;
+            color: var(--status-rejected);
+        }
+
+        .badge-active {
+            background-color: #d1fae5;
+            color: var(--status-completed);
+        }
+
+        .grid-half {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <div class="sidebar">
+            <div class="sidebar-header">
+                <span class="logo-icon">🔧</span> SVS Customer Portal
+            </div>
+            <div class="sidebar-nav">
+                <div class="nav-item active" onclick="switchTab('dashboard')">
+                    <span>📊</span> Overview
+                </div>
+                <div class="nav-item" onclick="switchTab('tickets')">
+                    <span>🎟️</span> Support Tickets
+                </div>
+                <div class="nav-item" onclick="switchTab('new-ticket')">
+                    <span>➕</span> Raise a Ticket
+                </div>
+                <div class="nav-item" onclick="switchTab('products')">
+                    <span>🪑</span> My Products
+                </div>
+                <div class="nav-item" onclick="switchTab('register-product')">
+                    <span>📝</span> Register Furniture
+                </div>
+            </div>
+            <div style="padding: 1.5rem; border-top: 1px solid rgba(255,255,255,0.1)">
+                <a href="#" id="logoutBtn" class="btn btn-secondary"
+                    style="width: 100%; text-align: center; color: white;">Log Out</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Top Header -->
+            <div class="topbar">
+                <h2 id="pageTitle">Dashboard Overview</h2>
+                <div class="d-flex align-items-center gap-3">
+                    <div style="text-align: right;">
+                        <div id="currentUserName" style="font-weight: 600;">Customer</div>
+                        <div id="currentUserRole" style="font-size: 0.75rem; color: var(--text-secondary);">Customer
+                        </div>
+                    </div>
+                    <div class="avatar"
+                        style="width: 40px; height: 40px; border-radius: 50%; background-color: var(--primary-color); color: white; display: flex; align-items: center; justify-content: center; font-weight: bold;">
+                        C</div>
+                </div>
+            </div>
+
+            <!-- Page Sections -->
+            <div class="page-content">
+
+                <!-- 1. DASHBOARD OVERVIEW TAB -->
+                <div id="tab-dashboard" class="tab-content">
+                    <div class="grid-3 mb-4">
+                        <div class="card stat-card">
+                            <div class="text-muted">Total Tickets Raised</div>
+                            <h2 id="metric-total-tickets">0</h2>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="text-muted">Active Complaints</div>
+                            <h2 id="metric-active-tickets">0</h2>
+                        </div>
+                        <div class="card stat-card">
+                            <div class="text-muted">Registered Products</div>
+                            <h2 id="metric-registered-products">0</h2>
+                        </div>
+                    </div>
+
+                    <div class="grid-half">
+                        <!-- Recent Tickets -->
+                        <div class="card">
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <h3>Recent Tickets</h3>
+                                <button class="btn btn-secondary btn-sm" onclick="switchTab('tickets')">View
+                                    All</button>
+                            </div>
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Ticket ID</th>
+                                        <th>Issue</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="recent-tickets-table">
+                                    <!-- Rendered dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Alerts / Notifications -->
+                        <div class="card">
+                            <h3>Alerts & Updates</h3>
+                            <div id="notifications-list" style="margin-top: 1rem; max-height: 300px; overflow-y: auto;">
+                                <!-- Rendered dynamically -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. TICKETS LIST & TIMELINE TRACKING TAB -->
+                <div id="tab-tickets" class="tab-content" style="display: none;">
+                    <div class="card mb-4">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3>My Support Tickets</h3>
+                            <button class="btn btn-primary btn-sm" onclick="switchTab('new-ticket')">+ Raise
+                                Ticket</button>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Ticket ID</th>
+                                    <th>Product Name</th>
+                                    <th>Issue Type</th>
+                                    <th>Priority</th>
+                                    <th>Status</th>
+                                    <th>Created At</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tickets-table-body">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Ticket Details Modal/Panel (Rendered when viewing a ticket) -->
+                    <div id="ticket-detail-card" class="card" style="display: none; margin-top: 1.5rem;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h3 id="detail-ticket-id">Ticket Details</h3>
+                            <button class="btn btn-secondary btn-sm" onclick="closeTicketDetails()">Close View</button>
+                        </div>
+                        <hr style="margin: 1rem 0; border: 0; border-top: 1px solid var(--border-color);">
+
+                        <!-- Visual Step Progress Timeline -->
+                        <div class="timeline" id="ticket-timeline">
+                            <div class="timeline-step" id="step-New">
+                                <div class="step-circle">1</div>
+                                <div class="step-label">Submitted</div>
+                            </div>
+                            <div class="timeline-step" id="step-UnderReview">
+                                <div class="step-circle">2</div>
+                                <div class="step-label">Under Review</div>
+                            </div>
+                            <div class="timeline-step" id="step-Assigned">
+                                <div class="step-circle">3</div>
+                                <div class="step-label">Assigned</div>
+                            </div>
+                            <div class="timeline-step" id="step-InProgress">
+                                <div class="step-circle">4</div>
+                                <div class="step-label">In Progress</div>
+                            </div>
+                            <div class="timeline-step" id="step-Resolved">
+                                <div class="step-circle">5</div>
+                                <div class="step-label">Resolved</div>
+                            </div>
+                        </div>
+
+                        <div class="grid-half">
+                            <div>
+                                <h4>Issue Details</h4>
+                                <table class="table mt-3" style="font-size: 0.875rem;">
+                                    <tr>
+                                        <td><strong>Product Name:</strong></td>
+                                        <td id="detail-product-name">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Issue Type:</strong></td>
+                                        <td id="detail-issue-type">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Priority:</strong></td>
+                                        <td id="detail-priority">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Description:</strong></td>
+                                        <td id="detail-description">-</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Resolution Notes:</strong></td>
+                                        <td id="detail-resolution-notes">-</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div>
+                                <h4>Uploaded Image</h4>
+                                <div id="detail-image-container" class="mt-3"
+                                    style="width:100%; max-height:220px; border:1px dashed var(--border-color); display:flex; align-items:center; justify-content:center; overflow:hidden;">
+                                    <span class="text-muted">No Image Uploaded</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h4 style="margin-top: 1.5rem;">Ticket Comments & History</h4>
+                        <div id="comments-list"
+                            style="margin-top: 1rem; border:1px solid var(--border-color); border-radius:6px; padding:1rem; max-height:200px; overflow-y:auto; background:#fafafa;">
+                            <!-- Comments go here -->
+                        </div>
+                        <form id="commentForm" class="d-flex gap-2 mt-3">
+                            <input type="text" id="commentText" class="form-control"
+                                placeholder="Add a public comment..." required>
+                            <button type="submit" class="btn btn-primary">Send</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 3. RAISE TICKET FORM TAB -->
+                <div id="tab-new-ticket" class="tab-content" style="display: none;">
+                    <div class="card" style="max-width: 600px; margin: 0 auto;">
+                        <h3>Submit Support Ticket / Claim</h3>
+                        <p class="text-muted mb-4">Please fill in details. Active warranties will be verified
+                            automatically.</p>
+
+                        <div id="newTicketError" class="alert alert-danger"
+                            style="display:none; margin-bottom:1rem; color:red;"></div>
+
+                        <form id="newTicketForm">
+                            <div class="form-group">
+                                <label class="form-label" for="ticketProduct">Select Registered Furniture
+                                    Product</label>
+                                <select id="ticketProduct" class="form-control" required>
+                                    <option value="">-- Choose Product --</option>
+                                    <!-- Populated dynamically -->
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="ticketIssueType">Ticket Type / Issue Category</label>
+                                <select id="ticketIssueType" class="form-control" required>
+                                    <option value="Product Complaint">Product Complaint (General defect)</option>
+                                    <option value="Warranty Claim">Warranty Claim (Parts replacement)</option>
+                                    <option value="Repair Request">Repair Request</option>
+                                    <option value="Polishing Request">Polishing Request</option>
+                                    <option value="Service Request">Service Request</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="ticketPriority">Priority</label>
+                                <select id="ticketPriority" class="form-control" required>
+                                    <option value="Low">Low</option>
+                                    <option value="Medium" selected>Medium</option>
+                                    <option value="High">High</option>
+                                    <option value="Critical">Critical</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="ticketDescription">Description of Issue *</label>
+                                <textarea id="ticketDescription" class="form-control" rows="4"
+                                    placeholder="Detail the fitting issue, polishing, damages, etc."
+                                    required></textarea>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="ticketImage">Upload Support Image (Optional)</label>
+                                <input type="file" id="ticketImage" class="form-control" accept="image/*">
+                                <div id="uploadProgress"
+                                    style="display:none; font-size:0.75rem; color:var(--text-secondary); margin-top:0.25rem;">
+                                    Uploading image...</div>
+                                <input type="hidden" id="uploadedImageUrl">
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Submit Support
+                                Ticket</button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- 4. REGISTERED PRODUCTS TAB -->
+                <div id="tab-products" class="tab-content" style="display: none;">
+                    <div class="card">
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h3>My Registered Furniture Products</h3>
+                            <button class="btn btn-primary btn-sm" onclick="switchTab('register-product')">+ Register
+                                Furniture</button>
+                        </div>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Category</th>
+                                    <th>Invoice #</th>
+                                    <th>Purchase Date</th>
+                                    <th>Warranty Range</th>
+                                    <th>Warranty Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="products-table-body">
+                                <!-- Rendered dynamically -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 5. REGISTER NEW PRODUCT TAB -->
+                <div id="tab-register-product" class="tab-content" style="display: none;">
+                    <div class="card" style="max-width: 600px; margin: 0 auto;">
+                        <h3>Register Purchased Furniture</h3>
+                        <p class="text-muted mb-4">Add your purchase details to validate and activate warranty coverage.
+                        </p>
+
+                        <div id="regProductError" class="alert alert-danger"
+                            style="display:none; margin-bottom:1rem; color:red;"></div>
+
+                        <form id="regProductForm">
+                            <div class="form-group">
+                                <label class="form-label" for="prodName">Product Name *</label>
+                                <input type="text" id="prodName" class="form-control"
+                                    placeholder="e.g. Teak Wood Bed Frame, Leather Sofa" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="prodCategory">Category</label>
+                                <select id="prodCategory" class="form-control" required>
+                                    <option value="Dining Table">Dining Table</option>
+                                    <option value="Sofa">Sofa</option>
+                                    <option value="Bed">Bed</option>
+                                    <option value="Chair">Chair</option>
+                                    <option value="Wardrobe">Wardrobe</option>
+                                    <option value="Other">Other Office/Home Furniture</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="prodInvoice">Invoice Number *</label>
+                                <input type="text" id="prodInvoice" class="form-control" placeholder="e.g. INV-2026-991"
+                                    required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="prodPurchaseDate">Purchase Date *</label>
+                                <input type="date" id="prodPurchaseDate" class="form-control" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label class="form-label" for="prodWarrantyYears">Warranty Period (Years)</label>
+                                <select id="prodWarrantyYears" class="form-control">
+                                    <option value="1">1 Year</option>
+                                    <option value="2">2 Years</option>
+                                    <option value="3" selected>3 Years (Standard)</option>
+                                    <option value="5">5 Years (Premium)</option>
+                                </select>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary" style="width: 100%;">Register Product</button>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/pages/customer-dashboard.js"></script>
+</body>
+
+</html>
