@@ -396,15 +396,24 @@ def add_comment(id):
 
 @tickets_bp.route('/<int:id>/resolution', methods=['PATCH'])
 @jwt_required
-@role_required(['admin'])
+@role_required(['admin', 'technician'])
 def update_resolution_notes(id):
     data = request.json or {}
     notes = data.get('notes', '')
     
-    ticket = execute_query("SELECT ticket_id FROM tickets WHERE id = %s", (id,), fetch_one=True)
+    ticket = execute_query("SELECT ticket_id, customer_id FROM tickets WHERE id = %s", (id,), fetch_one=True)
     if not ticket:
         return jsonify({"error": "Ticket not found"}), 404
         
+    # Authorization Check: Technicians can only update notes for their assigned tickets
+    if g.role == 'technician':
+        tech = execute_query("SELECT id FROM technicians WHERE user_id = %s", (g.user_id,), fetch_one=True)
+        if not tech:
+            return jsonify({"error": "Technician profile not found"}), 404
+        assigned = execute_query("SELECT id FROM assignments WHERE ticket_id = %s AND technician_id = %s", (id, tech['id']), fetch_one=True)
+        if not assigned:
+            return jsonify({"error": "Unauthorized to update resolution notes for this ticket"}), 403
+            
     execute_query("UPDATE tickets SET admin_notes = %s, updated_at = CURRENT_TIMESTAMP WHERE id = %s", (notes, id), commit=True)
     execute_query("INSERT INTO audit_logs (user_id, action, description) VALUES (%s, %s, %s)",
                   (g.user_id, 'TICKET_RESOLUTION_NOTE', f"Updated resolution notes for ticket {ticket['ticket_id']}"), commit=True)
